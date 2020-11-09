@@ -11,14 +11,24 @@ using UnityEditor;
 public class ShuttleControls : MonoBehaviour
 {
     ShuttleInputActions inputActions;
-    public float moveSpeed = 10, turnSpeed = 5;
+    public float launchSpeed = 10,
+        flySpeed = 50,
+        turnSpeed = 5;
+    [HideInInspector]
+    public bool inGame = false;
+    [HideInInspector]
+    public bool launching = false;
 
     private void Awake()
     {
         inputActions = new ShuttleInputActions();
-      
+        
         //inputActions.Flight.Pitch.started += ctx => braking = true;
         //inputActions.Flight.Brake.canceled += ctx => braking = false;
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
     }
     private void OnDisable()
     {
@@ -35,11 +45,20 @@ public class ShuttleControls : MonoBehaviour
     void Update()
     {
         //steer values
-        float pitch = moveSpeed * inputActions.Flight.Pitch.ReadValue<float>();
+        float pitch = turnSpeed * inputActions.Flight.Pitch.ReadValue<float>();
         float roll = turnSpeed * inputActions.Flight.Roll.ReadValue<float>();
         float yaw = turnSpeed * inputActions.Flight.Yaw.ReadValue<float>();
 
-        transform.Rotate(pitch, yaw, roll);
+        if (inGame)
+        {
+            transform.Rotate(pitch * Time.deltaTime, yaw * Time.deltaTime, -roll * Time.deltaTime);
+            transform.Translate(0, 0, flySpeed * Time.deltaTime);
+        }
 
+        if (launching)
+        {
+            transform.Translate(0, 0, launchSpeed * Time.deltaTime);
+        }
+        
     }
 }
