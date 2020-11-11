@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * Handles animations
+ * Main Editor: Josh-Tim Allen
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
