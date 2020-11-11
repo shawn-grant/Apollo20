@@ -34,7 +34,8 @@ public class IKController : MonoBehaviour {
 
     //a callback for calculating IK
     void OnAnimatorIK() {
-        if (animator) {
+        print("DDSD");
+        if (animator!=null) {
 
             //if the IK is active, set the position and rotation directly to the goal. 
             if (ikActive) {
@@ -47,6 +48,7 @@ public class IKController : MonoBehaviour {
 
                 // Set the right hand target position and rotation, if one has been assigned
                 if (rightHandTarget != null) {
+                    print("IKING");
                     animator.SetIKPositionWeight(AvatarIKGoal.RightHand, rightHandWeight);
                     animator.SetIKRotationWeight(AvatarIKGoal.RightHand, rightHandWeight);
                     animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandTarget.position);
