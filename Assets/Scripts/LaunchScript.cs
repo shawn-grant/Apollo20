@@ -12,13 +12,20 @@ using UnityEngine.Playables;
 public class LaunchScript : MonoBehaviour
 {
     public TextMeshProUGUI timer;
-    PlayableDirector director;
+    public NavigationScript navigation;
 
     // Start is called before the first frame update
     void Start()
     {
-        director = GetComponent<PlayableDirector>();
         StartCoroutine(Timer());
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            navigation.LoadScene("Gameplay");
+        }
     }
 
     IEnumerator Timer()
@@ -28,8 +35,8 @@ public class LaunchScript : MonoBehaviour
             timer.text = "00:00:0" + i;
             yield return new WaitForSeconds(1);
         }
-
-        
+        yield return new WaitForSeconds(25);
+        navigation.LoadScene("Gameplay");
         //director.Play();
     }
 }
