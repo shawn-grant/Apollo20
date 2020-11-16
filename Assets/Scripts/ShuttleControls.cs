@@ -14,10 +14,6 @@ public class ShuttleControls : MonoBehaviour
     public float launchSpeed = 10,
         flySpeed = 50,
         turnSpeed = 5;
-    [HideInInspector]
-    public bool inGame = false;
-    [HideInInspector]
-    public bool launching = false;
 
     private void Awake()
     {
@@ -49,16 +45,8 @@ public class ShuttleControls : MonoBehaviour
         float roll = turnSpeed * inputActions.Flight.Roll.ReadValue<float>();
         float yaw = turnSpeed * inputActions.Flight.Yaw.ReadValue<float>();
 
-        if (inGame)
-        {
-            transform.Rotate(pitch * Time.deltaTime, yaw * Time.deltaTime, -roll * Time.deltaTime);
-            transform.Translate(0, 0, flySpeed * Time.deltaTime);
-        }
+        transform.Rotate(pitch * Time.deltaTime, yaw * Time.deltaTime, -roll * Time.deltaTime);
+        transform.Translate(0, 0, flySpeed * Time.deltaTime);
 
-        if (launching)
-        {
-            transform.Translate(0, 0, launchSpeed * Time.deltaTime);
-        }
-        
     }
 }
